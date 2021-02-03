@@ -1,0 +1,7 @@
+dwightbot.zip
+/node_modules
+/.vscode
+/.pytest_cache
+package-lock.json
+token.txt
+settings.json
