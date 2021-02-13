@@ -23,12 +23,13 @@ Current List of Available Songs:
 - Electric City
 - In The Jungle
 - Male Prima Donna
+- Rockin Robin Theme
+- Sweeney Todd
 - That One Night
 - The Office Main Theme
 - The Scarn
 - The Wedding Theme
 - Threat Level Midnight
-- Sweeney Todd
 - What I Hate About You
 
 **DISCLAIMER** - Contains the original audio clips from NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). If intending to play these themes while you are streaming on a platform ([YouTube](https://www.youtube.com), [Twitch](https://www.twitch.tv/), or others), please refrain from playing these tracks as you can be subject to **COPYRIGHT ISSUES**.
@@ -53,7 +54,8 @@ Typing `?inspire me dwight` or `?imd` will pick a random quote in the `quotes.tx
 | --- | :---: |
 | `v1.1.7` | 5 |
 | `v1.2.5` | 20 |
-| `v1.3.1` | 41 | 
+| `v1.3.1` | 41 |
+| `v1.4.2` | 42 | 
 
 ## Version 1.0.0 - General Setup
 Basic Facility Bot with no functionality. Just introduced shell and related systems operations
