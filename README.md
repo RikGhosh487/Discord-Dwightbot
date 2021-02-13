@@ -54,8 +54,7 @@ Typing `?inspire me dwight` or `?imd` will pick a random quote in the `quotes.tx
 | --- | :---: |
 | `v1.1.7` | 5 |
 | `v1.2.5` | 20 |
-| `v1.3.1` | 41 |
-| `v1.4.2` | 42 | 
+| `v1.3.1` | 41 | 
 
 ## Version 1.0.0 - General Setup
 Basic Facility Bot with no functionality. Just introduced shell and related systems operations
