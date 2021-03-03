@@ -54,5 +54,20 @@ module.exports = {
             dictionary.push(line);
         });
         return dictionary;
+    },
+
+    loadSpeech: () => {
+        const speeches = [];
+        const filename = 'speech.txt';
+        readLine.createInterface({
+            input: fs.createReadStream(filename),
+            terminal: false
+        })
+        .on('line', line => {
+            let temp = line.split('~');
+            let speech = {title: temp[0], author: temp[1], body: temp[2]};
+            speeches.push(speech);
+        });
+        return speeches;
     }
 }

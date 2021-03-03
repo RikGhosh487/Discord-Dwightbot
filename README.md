@@ -2,12 +2,16 @@
 ## General Description
 Simple Discord bot themed with Dwight K. Shrute with multi-facated functionality
 
-### Current Bugs (as of v 1.4.2)
+### Current Bugs (as of v 1.4.3)
 - duplication of replies from the bot with `?hangman` command and all subsequent messages from the bot
 - looping pattern with same reply posted with multi-threading
 
-## Version 1.4.2 - Hangman User Input Introductory Patch
+## Version 1.4.3 - Hangman User Input Introductory Patch
 Introduced a looping request feeder for the bot that asks for a input length for the size of the word the user wants to pick for his/her hangman game.
+
+## Version 1.4.2 - Speech Update
+Introduced the 5th functionality for discord bot.
+Typing `?speech` or `?dwight speech` will make the bot print out one of the speeches delivered by Dwight K. Schrute in NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). The bot will pick a random speech from the `speech.txt` file and print out the text to the channel as an **embedded message**.
 
 ## Version 1.4.1 - Hangman Shell Update
 Introduced the basic shell of the 4th functionality for discord bot.
@@ -15,17 +19,20 @@ Typing `?hangman` will launch a new playable environment where the user would be
 
 ## Version 1.3.1 - Music Update
 Introduced third functionality for discord bot.
-Typing `?theme` or `?play` or `?play theme` while in a Voice Channel will make the bot play a random song that was featured in an episode of [The Office](https://www.peacocktv.com/stream-tv/the-office). After the song is finished, the bot shall automatically leave the Voice Channel and send a reply to notify the user that the song is over. There is not `?skip` or `?leave` command. Potential snarky reply feature may be introduced in the future.
+Typing `?theme` or `?play` or `?play theme` while in a Voice Channel will make the bot play a random song that was featured in an episode of [The Office](https://www.peacocktv.com/stream-tv/the-office). After the song is finished, the bot shall automatically leave the Voice Channel and send a reply to notify the user that the song is over. There is not `?skip` or `?leave` command. Potential snarky reply feature may be introduced in the future. Using the command `?theme(#)` will play the song at the `#` index in the song list, rather than the random index generation.
 
 Current List of Available Songs:
 - 9,986,000 Minutes
 - Best Intro Ever
 - Electric City
 - In The Jungle
+- I Will Remember You
 - Male Prima Donna
 - Rockin Robin Theme
+- Staying Alive
 - Sweeney Todd
 - That One Night
+- The Last Theme
 - The Office Main Theme
 - The Scarn
 - The Wedding Theme

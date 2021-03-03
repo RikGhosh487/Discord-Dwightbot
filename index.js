@@ -43,6 +43,10 @@ const usertag = 'Mister_Noob_Killer';
 const randomSong = () => songs[Math.floor(Math.random() * songs.length)];
 const songs = Initialize.loadSongs();
 
+// speech constant(s) and functions(s) [@version 1.4.2 : Speech Update]
+const printSpeech = () => speech[Math.floor(Math.random() * speech.length)];
+const speech = Initialize.loadSpeech();
+
 // hangman constants and variables
 const evilHangmanDictionary = Initialize.loadDictionary();
 const maxGuesses = 25;
@@ -102,6 +106,47 @@ client.on('message', async message => {
                 });
             }).catch(err => console.error(err));
             return;
+        }
+        if(command.startsWith('theme(') && command.endsWith(')')) { // indexed version of theme command
+            const voiceChannel = message.member.voice.channel;  // check to see if the author is in a VC
+            if(!voiceChannel) {
+                return message.channel.send('Do you even realize that in order to hear something, you need' 
+                        + ' to be in a Voice Channel')
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+            }
+            const permissions = voiceChannel.permissionsFor(message.client.user);
+            if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) {  // check for permissions
+                return message.channel.send('You cannot bar my managerial rights to speak and talk in ' 
+                        + 'a Voice Channel. I will go tell Michael and you shall face the consequences')
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+            }
+            let index = parseInt(command.substring(6, command.length - 1));
+            index = index >= 0 && index < songs.length ? index : 0;
+            const currentSong = songs[index];
+            voiceChannel.join().then(connection => {
+                const dispatcher = connection.play('./audio/' + currentSong.file);
+                message.channel.send(`I see you have discovered DJ Dwight...` 
+                        + ` You're currently listening to ${currentSong.title}`)
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+                dispatcher.setVolume(1);
+                dispatcher.on('finish', () => {
+                    voiceChannel.leave();
+                    message.channel.send(`Show's over ${message.author.username}... Go Home`)
+                            .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+                });
+            }).catch(err => console.error(err));
+            return;
+        }
+        /******************** Speech [ @version 1.4.2 ] ********************/
+        if(command === 'speech' || command === 'dwight speech') {
+            const currentSpeech = printSpeech();
+            const embeddedMessage = new Discord.MessageEmbed();
+            embeddedMessage.setColor('#bf5700');
+            embeddedMessage.setAuthor(currentSpeech.author);
+            embeddedMessage.setTitle(currentSpeech.title);
+            embeddedMessage.setDescription(currentSpeech.body);
+            return message.channel.send(embeddedMessage) // prints out one of the several speeches
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
         }
         /******************** Hangman Activation [ @version 1.4.1 ] ********************/
         if(command === 'hangman') {
