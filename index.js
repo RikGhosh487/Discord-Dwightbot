@@ -3,7 +3,7 @@
  * 
  * @author Rik Ghosh
  * @author Soham Saha
- * @version 1.4.1
+ * @version 1.4.3
  * @copyright 2021 
  */
 
@@ -20,13 +20,6 @@ const fs = require('fs');
 const client = new Discord.Client();
 const prefix = '?';
 const timeoutBase = 120_000;
-const sleep = milliseconds => {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-        currentDate = Date.now();
-    } while(currentDate - date < milliseconds);
-};
 
 // dwight quotes constant(s) and function(s)  [@version 1.1.7 : Dwight Quotes Update]
 const quotes = Initialize.loadDwightQuotes();
@@ -46,6 +39,37 @@ const songs = Initialize.loadSongs();
 // speech constant(s) and functions(s) [@version 1.4.2 : Speech Update]
 const printSpeech = () => speech[Math.floor(Math.random() * speech.length)];
 const speech = Initialize.loadSpeech();
+
+// episode search constant(s) and function(s) [@version 1.4.3 : Episode Search Update]
+const fetchEpisode = () => episodes[Math.floor(Math.random() * episodes.length)];
+const episodes = Initialize.loadEpisodes();
+const seasonInfo = {1: { color: '#fff777',
+        image: 'https://static.wikia.nocookie.net/theoffice/images' 
+        + '/4/44/Season1DVD.jpg/revision/latest?cb=20100115211205'},
+        2: { color: '#cae2f2',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/e/ee/Season2DVD.jpg/revision/latest?cb=20060831222832'},
+        3: { color: '#6cbbf3',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/f/f9/Season3DVD.jpg/revision/latest?cb=20070814160258'},
+        4: { color: '#4e4a4a',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/3/3c/Season4DVD.jpg/revision/latest?cb=20080903180804'},
+        5: { color: '#e4ded0',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/7/7c/Season5DVD.jpg/revision/latest?cb=20091221142407'},
+        6: { color: '#9a3442',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/a/a5/TheOffice_S6_DVD.jpg/revision/latest?cb=20100607063143'},
+        7: { color: '#c59765',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/a/a5/Seasonseven.jpg/revision/latest?cb=20120628201751'},
+        8: { color: '#5ead8d',
+        image: 'https://static.wikia.nocookie.net/theoffice'
+        + '/images/a/ae/The_Office_Season_8.jpg/revision/latest?cb=20120906230835'},
+        9: { color: '#a7d9f3',
+        image: 'https://static.wikia.nocookie.net/theoffice/images'
+        + '/3/32/The_Office_S9_DVD.jpg/revision/latest?cb=20130523201552'}};
 
 // hangman constants and variables
 const evilHangmanDictionary = Initialize.loadDictionary();
@@ -146,6 +170,28 @@ client.on('message', async message => {
             embeddedMessage.setTitle(currentSpeech.title);
             embeddedMessage.setDescription(currentSpeech.body);
             return message.channel.send(embeddedMessage) // prints out one of the several speeches
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+        }
+        /******************** Episode Search [ @version 1.4.3 ] ********************/
+        if(command === 'episode' || command === 'watch episode') {
+            const randomEpisode = fetchEpisode();
+            const embeddedMessage = new Discord.MessageEmbed();
+            embeddedMessage.setColor(seasonInfo[randomEpisode.season].color);
+            embeddedMessage.setTitle(randomEpisode.season + 'x' + randomEpisode.episode 
+                    + ": " + randomEpisode.title);
+            embeddedMessage.setURL('https://watchtheoffice.cc/episodes/the-office-' +
+                    randomEpisode.season + 'x' + randomEpisode.episode + '/');
+            embeddedMessage.setAuthor('Dwight K. Schrute', seasonInfo[randomEpisode.season].image);
+            embeddedMessage.setThumbnail(seasonInfo[randomEpisode.season].image);
+            embeddedMessage.setImage(seasonInfo[randomEpisode.season].image);
+            embeddedMessage.setTimestamp();
+            embeddedMessage.addFields(
+                { name: 'Season',  value: '' + randomEpisode.season, inline: true},
+                { name: 'Episode',  value: '' + randomEpisode.episode, inline: true},
+                { name: 'Episode ID', value: randomEpisode.id, inline: true},
+                { name: 'Views (on the day of release)',  value: randomEpisode.views + ' million', inline: true}
+            );
+            return message.channel.send(embeddedMessage)
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
         }
         /******************** Hangman Activation [ @version 1.4.1 ] ********************/

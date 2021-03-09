@@ -69,5 +69,21 @@ module.exports = {
             speeches.push(speech);
         });
         return speeches;
+    },
+
+    loadEpisodes: () => {
+        const episodes = [];
+        const filename = 'episodes.txt';
+        readLine.createInterface({
+            input: fs.createReadStream(filename),
+            terminal: false
+        })
+        .on('line', line => {
+            let temp = line.split('_');
+            let episode = {season: parseInt(temp[0]), episode: parseInt(temp[1]), 
+                    title: temp[2], views: parseFloat(temp[3]), id: '@' + (episodes.length + 1)};
+            episodes.push(episode);
+        });
+        return episodes;
     }
 }

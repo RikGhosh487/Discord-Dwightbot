@@ -1,0 +1,189 @@
+1_1_"Pilot"_11.20
+1_2_"Diversity Day"_6.00
+1_3_"Health Care"_5.80
+1_4_"The Alliance"_5.40
+1_5_"Basketball"_5.00
+1_6_"Hot Girl"_4.80
+2_1_"The Dundies"_9.00
+2_2_"Sexual Harassment"_7.13
+2_3_"Office Olympics"_8.30
+2_4_"The Fire"_7.60
+2_5_"Halloween"_8.00
+2_6_"The Fight"_7.90
+2_7_"The Client"_7.50
+2_8_"Performance Review"_8.00
+2_9_"Email Surveillance"_8.10
+2_10_"Christmas Party"_9.70
+2_11_"Booze Cruise"_8.70
+2_12_"The Injury"_10.30
+2_13_"The Secret"_8.70
+2_14_"The Carpet"_8.60
+2_15_"Boys and Girls"_5.42
+2_16_"Valentine's Day"_8.95
+2_17_"Dwight's Speech"_8.40
+2_18_"Take Your Daughter to Work Day"_8.80
+2_19_"Michael's Birthday"_7.80
+2_20_"Drug Testing"_7.80
+2_21_"Conflict Resolution"_7.40
+2_22_"Casino Night"_7.60
+3_1_"Gay Witch Hunt"_9.11
+3_2_"The Convention"_7.78
+3_3_"The Coup"_8.89
+3_4_"Grief Counseling"_8.83
+3_5_"Initiation"_8.46
+3_6_"Diwali"_8.81
+3_7_"Branch Closing"_8.05
+3_8_"The Merger"_8.63
+3_9_"The Convict"_9.07
+3_10_"A Benihana Christmas"_8.44
+3_11_"Back from Vacation"_8.80
+3_12_"Traveling Salesman"_10.12
+3_13_"The Return"_10.20
+3_14_"Ben Franklin"_10.11
+3_15_"Phyllis' Wedding"_8.84
+3_16_"Business School"_8.84
+3_17_"Cocktails"_8.30
+3_18_"The Negotiation"_6.74
+3_19_"Safety Training"_7.71
+3_20_"Product Recall"_7.56
+3_21_"Women's Appreciation"_7.00
+3_22_"Beach Games"_7.20
+3_23_"The Job"_7.88
+4_1_"Fun Run"_9.70
+4_2_"Dunder Mifflin Infinity"_8.49
+4_3_"Launch Party"_8.91
+4_4_"Money"_8.50
+4_5_"Local Ad"_8.98
+4_6_"Branch Wars"_8.39
+4_7_"Survivor Man"_8.29
+4_8_"The Deposition"_8.86
+4_9_"Dinner Party"_9.22
+4_10_"Chair Model"_9.81
+4_11_"Night Out"_7.56
+4_12_"Did I Stutter?"_7.67
+4_13_"Job Fair"_7.22
+4_14_"Goodbye, Toby"_8.07
+5_1_"Weight Loss"_9.20
+5_2_"Business Ethics"_8.99
+5_3_"Baby Shower"_8.07
+5_4_"Crime Aid"_7.74
+5_5_"Employee Transfer"_9.32
+5_6_"Customer Survey"_8.35
+5_7_"Business Trip"_8.18
+5_8_"Frame Toby"_8.40
+5_9_"The Surplus"_8.33
+5_10_"Moroccan Christmas"_8.79
+5_11_"The Duel"_8.50
+5_12_"Prince Family Paper"_8.74
+5_13_"Stress Relief"_22.91
+5_14_"Lecture Circuit: Part 1"_8.39
+5_15_"Lecture Circuit: Part 2"_8.89
+5_16_"Blood Drive"_8.63
+5_17_"Golden Ticket"_7.51
+5_18_"New Boss"_7.95
+5_19_"Two Weeks"_8.45
+5_20_"Dream Team"_7.20
+5_21_"Michael Scott Paper Company"_7.94
+5_22_"Heavy Competition"_8.24
+5_23_"Broke"_7.21
+5_24_"Casual Friday"_7.31
+5_25_"Cafe Disco"_7.71
+5_26_"Company Picnic"_6.72
+6_1_"Gossip"_8.20
+6_2_"The Meeting"_7.33
+6_3_"The Promotion"_7.28
+6_4_"Niagara"_9.42
+6_5_"Mafia"_8.10
+6_6_"The Lover"_8.52
+6_7_"Koi Pond"_8.20
+6_8_"Double Date"_7.94
+6_9_"Murder"_7.76
+6_10_"Shareholder Meeting"_7.43
+6_11_"Scott's Tots"_8.10
+6_12_"Secret Santa"_8.51
+6_13_"The Banker"_7.29
+6_14_"Sabre"_7.36
+6_15_"The Manager and the Salesman"_7.40
+6_16_"The Delivery: Part 1"_9.00
+6_17_"The Delivery: Part 2"_9.00
+6_18_"St. Patrick's Day"_7.51
+6_19_"New Leads"_7.63
+6_20_"Happy Hour"_7.17
+6_21_"Secretary's Day"_6.30
+6_22_"Body Language"_7.01
+6_23_"The Cover-Up"_6.84
+6_24_"The Chump"_6.60
+6_25_"Whistleblower"_6.60
+7_1_"Nepotism"_8.40
+7_2_"Counseling"_7.36
+7_3_"Andy's Play"_6.95
+7_4_"Sex Ed"_7.36
+7_5_"The Sting"_6.87
+7_6_"Costume Contest"_8.07
+7_7_"Christening"_7.65
+7_8_"Viewing Party"_7.15
+7_9_"WUPHF.com"_7.28
+7_10_"China"_7.31
+7_11_"Classy Christmas: Part 1"_7.18
+7_12_"Classy Christmas: Part 2"_7.18
+7_13_"Ultimatum"_8.26
+7_14_"The Seminar"_7.93
+7_15_"The Search"_7.29
+7_16_"PDA"_6.90
+7_17_"Threat Level Midnight"_6.41
+7_18_"Todd Packer"_6.12
+7_19_"Garage Sale"_7.07
+7_20_"Training Day"_7.87
+7_21_"Michael's Last Dundies"_6.85
+7_22_"Goodbye, Michael"_8.42
+7_23_"The Inner Circle"_6.90
+7_24_"Dwight K. Schrute, (Acting) Manager"_6.45
+7_25_"Search Committee: Part 1"_7.29
+7_26_"Search Committee: Part 2"_7.29
+8_1_"The List"_7.64
+8_2_"The Incentive"_6.70
+8_3_"Lotto"_5.82
+8_4_"Garden Party"_6.08
+8_5_"Spooked"_5.53
+8_6_"Doomsday"_6.15
+8_7_"Pam's Replacement"_5.96
+8_8_"Gettysburg"_5.50
+8_9_"Mrs. California"_5.71
+8_10_"Christmas Wishes"_5.79
+8_11_"Trivia"_5.90
+8_12_"Pool Party"_6.02
+8_13_"Jury Duty"_5.31
+8_14_"Special Project"_5.19
+8_15_"Tallahassee"_4.38
+8_16_"After Hours"_5.02
+8_17_"Test the Store"_4.95
+8_18_"Last Day in Florida"_4.89
+8_19_"Get the Girl"_4.87
+8_20_"Welcome Party"_4.39
+8_21_"Angry Andy"_4.35
+8_22_"Fundraiser"_4.17
+8_23_"Turf War"_4.44
+8_24_"Free Family Portrait Studio"_4.49
+9_1_"New Guys"_4.28
+9_2_"Roy's Wedding"_4.13
+9_3_"Andy's Ancestry"_4.14
+9_4_"Work Bus"_4.28
+9_5_"Here Comes Treble"_4.00
+9_6_"The Boat"_4.83
+9_7_"The Whale"_4.16
+9_8_"The Target"_3.88
+9_9_"Dwight Christmas"_4.16
+9_10_"Lice"_4.15
+9_11_"Suit Warehouse"_4.15
+9_12_"Customer Loyalty"_4.19
+9_13_"Junior Salesman"_4.45
+9_14_"Vandalism"_3.97
+9_15_"Couples Discount"_4.15
+9_16_"Moving On"_4.06
+9_17_"The Farm"_3.54
+9_18_"Promos"_3.44
+9_19_"Stairmageddon"_3.83
+9_20_"Paper Airplane"_3.25
+9_21_"Livin' the Dream"_3.51
+9_22_"A.A.R.M."_4.56
+9_23_"Finale"_5.69
