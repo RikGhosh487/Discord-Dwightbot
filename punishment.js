@@ -1,9 +1,8 @@
 module.exports = {
     checkProfanity: (message, bannedWords) => {
-        for(const word of bannedWords) {
-            if(message.indexOf(word) > -1) {
-                return true;
-            }
+        message = message.split(" ");
+        for (const word of message) {
+            if(bannedWords.includes(word)) return true;
         }
         return false;
     }
