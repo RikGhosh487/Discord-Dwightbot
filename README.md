@@ -2,16 +2,16 @@
 ## General Description
 Simple Discord bot themed with Dwight K. Shrute with multi-facated functionality
 
-### Current Bugs (as of v 1.4.4)
+### Current Bugs (as of v 1.5.1)
 - duplication of replies from the bot with `?hangman` command and all subsequent messages from the bot
 - looping pattern with same reply posted with multi-threading
 
-## Version 1.4.4 - Hangman User Input Introductory Patch
+## Version 1.5.1 - Hangman User Input Introductory Patch
 Introduced a looping request feeder for the bot that asks for a input length for the size of the word the user wants to pick for his/her hangman game.
 
-## Version 1.4.3 - Episode Highlights Update
+## Version 1.5.0 - Episode Highlights Update
 Introduced the 6th functionality for discord bot.
-Typing `?episode` or `?watch episode` will make the bot print an **embedded message** linking to a random episode of NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). The embed contain the **season**, the **episode**, the number of **views** it received on the day of the release a **hyperlink** to watch the episode, **DVD cover thumbnail** of the season, and an **id** that will be used for indexed searching of an episode. Snarky Dwight comments to be added in the future. Many more features to be introduced in the future.
+Typing `?episode` or `?watch episode` will make the bot print an **embedded message** linking to a random episode of NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). The embed contain the **season**, the **episode**, the number of **views** it received on the day of the release a **hyperlink** to watch the episode, **DVD cover thumbnail** of the season, and an **id** that will be used for indexed searching of an episode. Using the command `?episode(#)` will fetch the episode with the id of `@#` in the episode list, rather than random index generation. The `?dwight's monthly pick` or `?dmp` command will present Dwight's top 10 list for that month. This command interprets the date and time of the command in real time, and using that information, presents a **themed version** of the top 10 list for each month. If the switch-case fails due to an error, or in a **15%** chance, the default list for that day is presented with a special description. This is also presented as a embed message with a tabular format. The top 10 list provides the season and episode number and the title.
 
 ## Version 1.4.2 - Speech Update
 Introduced the 5th functionality for discord bot.

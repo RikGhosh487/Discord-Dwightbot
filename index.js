@@ -3,18 +3,18 @@
  * 
  * @author Rik Ghosh
  * @author Soham Saha
- * @version 1.4.3
+ * @version 1.5.1
  * @copyright 2021 
  */
 
 // custom imports from local files
 const Initialize = require('./initialize');     // used to populate all arrays in streams to conserve data
-const Punishment = require('./punishment');     // used to check for cursewords and log information
+const Punishment = require('./punishment');     // used to check for cursewords
 const Settings = require('./settings.json');    // used to get bot token from the app's API
+const Suggestions = require('./suggestions');   // used to produce top 10 lists
 
 // node.js module imports
 const Discord = require('discord.js');
-const fs = require('fs');
 
 // general constants and initializers   [@version 1.0.0 : General Setup]
 const client = new Discord.Client();
@@ -40,12 +40,25 @@ const songs = Initialize.loadSongs();
 const printSpeech = () => speech[Math.floor(Math.random() * speech.length)];
 const speech = Initialize.loadSpeech();
 
-// episode search constant(s) and function(s) [@version 1.4.3 : Episode Search Update]
-const fetchEpisode = () => episodes[Math.floor(Math.random() * episodes.length)];
+// episode search constant(s) and function(s) [@version 1.5.0 : Episode Search Update]
 const episodes = Initialize.loadEpisodes();
+const fetchEpisode = () => episodes[Math.floor(Math.random() * episodes.length)];
+const fieldPop = episodeList => {
+    const fields = [];
+    let data1 = '';
+    let data2 = '';
+    for(let i = 0; i < episodeList.length; i++) {
+        data1 += episodeList[i].season + ' x ' + episodeList[i].episode + '\n';
+        data2 += episodeList[i].title.substring(1, episodeList[i].title.length - 1) + '\n';
+    }
+    let obj1 = { name: 'Episode', value: data1, inline: true };
+    let obj2 = { name: 'Title', value: data2, inline: true };
+    fields.push(obj1, obj2);
+    return fields;
+}
 const seasonInfo = {1: { color: '#fff777',
-        image: 'https://static.wikia.nocookie.net/theoffice/images' 
-        + '/4/44/Season1DVD.jpg/revision/latest?cb=20100115211205'},
+        image: 'https://static.wikia.nocookie.net/theoffice/images/' 
+        + '4/44/Season1DVD.jpg/revision/latest?cb=20100115211205'},
         2: { color: '#cae2f2',
         image: 'https://static.wikia.nocookie.net/theoffice/images'
         + '/e/ee/Season2DVD.jpg/revision/latest?cb=20060831222832'},
@@ -172,7 +185,7 @@ client.on('message', async message => {
             return message.channel.send(embeddedMessage) // prints out one of the several speeches
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
         }
-        /******************** Episode Search [ @version 1.4.3 ] ********************/
+        /******************** Episode Search [ @version 1.5.0 ] ********************/
         if(command === 'episode' || command === 'watch episode') {
             const randomEpisode = fetchEpisode();
             const embeddedMessage = new Discord.MessageEmbed();
@@ -191,6 +204,52 @@ client.on('message', async message => {
                 { name: 'Episode ID', value: randomEpisode.id, inline: true},
                 { name: 'Views (on the day of release)',  value: randomEpisode.views + ' million', inline: true}
             );
+            return message.channel.send(embeddedMessage)
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
+        }
+        if(command.startsWith('episode(') && command.endsWith(')')) {   // indexed version of episode searching
+            let passedValue = command.substring(8, command.length - 1);
+            if(!passedValue.startsWith('@')) {
+                return message.channel.send('Missing id prefix. Please add `@` before the episode id')
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+            }
+            let index = parseInt(passedValue.slice(1));
+            if(isNaN(index) || index <= 0 || index > episodes.length) {
+                return message.channel.send('Not a valid episode id. Please select a valid episode id to make a fetch request')
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+            }
+            const requestedEpisode = episodes[index - 1];
+            const embeddedMessage = new Discord.MessageEmbed();
+            embeddedMessage.setColor(seasonInfo[requestedEpisode.season].color);
+            embeddedMessage.setTitle(requestedEpisode.season + 'x' + requestedEpisode.episode 
+                    + ": " + requestedEpisode.title);
+            embeddedMessage.setURL('https://watchtheoffice.cc/episodes/the-office-' +
+                    requestedEpisode.season + 'x' + requestedEpisode.episode + '/');
+            embeddedMessage.setAuthor('Dwight K. Schrute', seasonInfo[requestedEpisode.season].image);
+            embeddedMessage.setThumbnail(seasonInfo[requestedEpisode.season].image);
+            embeddedMessage.setImage(seasonInfo[requestedEpisode.season].image);
+            embeddedMessage.setTimestamp();
+            embeddedMessage.addFields(
+                { name: 'Season',  value: '' + requestedEpisode.season, inline: true},
+                { name: 'Episode',  value: '' + requestedEpisode.episode, inline: true},
+                { name: 'Episode ID', value: requestedEpisode.id, inline: true},
+                { name: 'Views (on the day of release)',  value: requestedEpisode.views + ' million', inline: true}
+            );
+            return message.channel.send(embeddedMessage)
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2}));
+        }
+        if(command === 'dwight\'s monthly pick' || command === 'dmp') {
+            const currentDate = new Date(Date.now());
+            const month = currentDate.getMonth();
+            const date = currentDate.getDate();
+            const selectedEpisodes = Suggestions.top10monthly(month, date);
+            const theme = Suggestions.getTheme(month, date);
+            const embeddedMessage = new Discord.MessageEmbed();
+            embeddedMessage.setColor('#bf5700');
+            embeddedMessage.setTitle('Dwight\'s Top 10 Episode List');
+            embeddedMessage.setTimestamp();
+            embeddedMessage.setDescription(theme);
+            embeddedMessage.addFields(fieldPop(selectedEpisodes));
             return message.channel.send(embeddedMessage)
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
         }
