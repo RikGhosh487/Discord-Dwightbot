@@ -30,7 +30,7 @@ const bannedWords = Initialize.loadBannedWords();
 
 // domination constant(s) and function(s) [@version 1.2.8 : Domination Update]
 const dominate = () => Math.random() > 0.1;
-const usertag = 'Mister_Noob_Killer';
+const usertag = ['MrNoobKille.r#1903'];
 
 // music constant(s) and function(s) [@version 1.3.1 : Music Update]
 const randomSong = () => songs[Math.floor(Math.random() * songs.length)];
@@ -367,7 +367,7 @@ client.on('message', async message => {
                 .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
     }
     /******************** Domination Control [ @version 1.2.8 ] ********************/
-    if(message.author.username === usertag && dominate()) { // has a 9 percent chance of writing
+    if(usertag.includes(message.author.tag) && dominate()) { // has a 9 percent chance of writing
         return message.delete();
     }
     /******************** Profanity Filter [ @version 1.2.4 ] ********************/

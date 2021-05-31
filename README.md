@@ -49,9 +49,9 @@ Current List of Available Songs:
 Special user specific functionality added to discord bot.
 Continuously monitors the chats to detetch any messages from selected list of server members and **silently** deletes their messages without sending any indication or reply. This domination feature needs to be manually swithced **ON** or **OFF** via hardcoding the flag in `index.js`.
 
-| Update | User Count | Username |
+| Update | User Count | Usertag |
 | :--- | :---: | :---: |
-| `v1.2.8` | 1 | `@Mister_Noob_Killer` |
+| `v1.2.8` | 1 | `MrNoobKille.r#1903` |
 
 ## Version 1.2.4 - Profanity Filter Update
 Introduced second function for discord bot.
