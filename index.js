@@ -47,9 +47,9 @@ const fieldPop = episodeList => {
     const fields = [];
     let data1 = '';
     let data2 = '';
-    for(let i = 0; i < episodeList.length; i++) {
-        data1 += episodeList[i].season + ' x ' + episodeList[i].episode + '\n';
-        data2 += episodeList[i].title.substring(1, episodeList[i].title.length - 1) + '\n';
+    for(const epi of episodeList) {
+        data1 += epi.season + ' x ' + epi.episode + '\n';
+        data2 += epi.title.substring(1, epi.title.length - 1) + '\n';
     }
     let obj1 = { name: 'Episode', value: data1, inline: true };
     let obj2 = { name: 'Title', value: data2, inline: true };
