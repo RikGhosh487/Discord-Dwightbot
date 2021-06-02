@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class HangmanMain {
-    private static final String DICTIONARY_FILE = "../dictionary.txt";
+    private static final String DICTIONARY_FILE = "./dictionary.txt";
     private static final boolean DEBUG = false;
     private static final int MAX_GUESSES = 25;
     private static final String NEWLINE = System.getProperty("line.separator");
@@ -53,7 +53,7 @@ public class HangmanMain {
     }
 
     private static HangmanDifficulty getDifficulty(Scanner keyboard) {
-        var diffChoice = HangmanDifficulty.EASY.ordinal();
+        int diffChoice = HangmanDifficulty.EASY.ordinal();
         do{
             System.out.println("What difficulty level would you want?");
             System.out.print("Enter a number between " + HangmanDifficulty.minPossible() 
