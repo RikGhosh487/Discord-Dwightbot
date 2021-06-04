@@ -17,7 +17,6 @@ const Tokens = require('./tokenizer');          // used to generate tokens for I
 // node.js module imports
 const Discord = require('discord.js');
 const exec = require('child_process').exec;
-const { settings } = require('cluster');
 
 // general constants and initializers   [@version 1.0.0 : General Setup]
 const client = new Discord.Client();
@@ -89,20 +88,36 @@ const seasonInfo = {1: { color: '#fff777',
 
 // hangman constants and variables
 const evilHangmanDictionary = Initialize.loadDictionary();
-let userToken = ''
-let hangmanUser;
-let channelToken = ''
+let userToken = undefined;
+let channelToken = undefined;
+const readHangman = (author, channel) => author === userToken && channel === channelToken;
 
 client.once('ready', () => {
     console.log('Bot Ready!');
     client.user.setPresence({ status: 'invisible' });   // sets bot invisible to users
 });
 
+client.on('message', async message => {
+    if(message.author.bot) return;  // ignore messages from another bot
+    let authorToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
+    let sourceToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
+    if(message.content.startsWith(prefix) && readHangman(authorToken, sourceToken)) {
+        const command = message.content.slice(prefix.length).toLowerCase();
+        if(command === 'quit') {
+            userToken = undefined;
+            channelToken = undefined;
+            return;
+        }
+    }
+});
+
 
 client.on('message', async message => {
     if(message.author.bot) return;  // ignore messages from another bot
     // master commands for the bot
-    if(message.content.startsWith(prefix) && (hangmanUser === undefined || hangmanUser !== message.author)) {
+    let authorToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
+    let sourceToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
+    if(message.content.startsWith(prefix) && !readHangman(authorToken, sourceToken)) {
         const command = message.content.slice(prefix.length).toLowerCase();
         /******************** Dwight Quotes [ @version 1.1.7 ] ********************/
         if(command === 'inspire me dwight' || command === 'imd') {
@@ -249,7 +264,9 @@ client.on('message', async message => {
         }
         /******************** Hangman Activation [ @version 1.4.1 ] ********************/
         if(command === 'hangman') {
-            message.channel.send('Logging Information');
+            if(userToken !== undefined || channelToken !== undefined) {
+                return message.channel.send('One instance of game active');
+            }
             userToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
             channelToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
             message.channel.send(`User Token: ${userToken}, Channel Token: ${channelToken}`);

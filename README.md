@@ -2,12 +2,12 @@
 ## General Description
 Simple Discord bot themed with Dwight K. Shrute with multi-facated functionality
 
-### Current Bugs (as of v 1.5.1)
-- duplication of replies from the bot with `?hangman` command and all subsequent messages from the bot
-- looping pattern with same reply posted with multi-threading
+### Current Bugs (as of v 1.5.0)
+- ~~duplication of replies from the bot with `?hangman` command and all subsequent messages from the bot~~ (**PATCHED**)
+- ~~looping pattern with same reply posted with multi-threading~~ (**PATCHED**)
 
-## Version 1.5.1 - Hangman User Input Introductory Patch
-Introduced a looping request feeder for the bot that asks for a input length for the size of the word the user wants to pick for his/her hangman game.
+## Version 1.5.1 - Hangman User Control Patch
+Introduced sessions environment for Hangman Users. Patched aforementioned bugs and removed preceding functionality for accepting user input. Added Java and Shell scripting modules for communication from source control. 
 
 ## Version 1.5.0 - Episode Highlights Update
 Introduced the 6th functionality for discord bot.
