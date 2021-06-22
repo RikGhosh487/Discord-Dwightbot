@@ -88,10 +88,10 @@ const seasonInfo = {1: { color: '#fff777',
         + '/3/32/The_Office_S9_DVD.jpg/revision/latest?cb=20130523201552'}};
 
 // hangman constants and variables
-const evilHangmanDictionary = Initialize.loadDictionary();
 let userToken = undefined;
 let channelToken = undefined;
 let lengthFlag = false;
+let guessFlag = false;
 const readHangman = (author, channel) => author === userToken && channel === channelToken;
 
 client.once('ready', () => {
@@ -114,8 +114,22 @@ client.on('message', async message => {
     }
     if(readHangman(authorToken, sourceToken)) {
         if(lengthFlag) {
-            let msg = await Hangman.wordLength(message.content);
-            return message.channel.send(msg);
+            const output = await Hangman.wordLength(message.content, lengthFlag);
+            lengthFlag = output[1];
+            if(lengthFlag) {
+                message.channel.send(output[0]);
+                return message.channel.send('Pick a length for your word, again...');
+            }
+            return message.channel.send('Pick the number of wrong guesses you want to allow');
+        }
+        if(guessFlag) {
+            const output = await Hangman.guessCount(message.content, guessFlag);
+            guessFlag = output[1];
+            if(guessFlag) {
+                message.channel.send(output[0]);
+                return message.channel.send('Pick the number of wrong guesses you want to allow, again...');
+            }
+            return message.channel.send('Hangman would BEGIN from here');
         }
     }
 });
@@ -284,18 +298,11 @@ client.on('message', async message => {
                     + ` chance to prove yourself. Lets see how good you are ${message.author.username}`);
             userToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
             channelToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
-            lengthFlag = true;
+            lengthFlag = guessFlag = true;
             console.log(`User Token: ${userToken}, Channel Token: ${channelToken}`);
             message.channel.send('Pick a length for your word');
             return;
         }
-        //     hangmanActive = true;
-        //     hangmanUser = message.author;
-        //     hangmanChannel = message.channel;
-        //     lobby.push(hangmanUser);
-        //     hangman();
-        //     return;
-        // }
         // if(command === 'quit') {
         //     return message.channel.send(`On wow! You haven't even started and are calling quits...` 
         //             + ` You're a disgrace to Dunder Mifflin ${message.author}`)
