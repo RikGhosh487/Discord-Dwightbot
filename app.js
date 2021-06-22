@@ -90,6 +90,8 @@ const seasonInfo = {1: { color: '#fff777',
 // hangman constants and variables
 let userToken = undefined;
 let channelToken = undefined;
+let pattern = undefined;
+let wrongs = undefined;
 let lengthFlag = false;
 let guessFlag = false;
 const readHangman = (author, channel) => author === userToken && channel === channelToken;
@@ -109,6 +111,7 @@ client.on('message', async message => {
             userToken = undefined;
             channelToken = undefined;
             lengthFlag = false;
+            guessFlag = false;
             return;
         }
     }
@@ -120,6 +123,7 @@ client.on('message', async message => {
                 message.channel.send(output[0]);
                 return message.channel.send('Pick a length for your word, again...');
             }
+            pattern = output[3];
             return message.channel.send('Pick the number of wrong guesses you want to allow');
         }
         if(guessFlag) {
@@ -129,8 +133,25 @@ client.on('message', async message => {
                 message.channel.send(output[0]);
                 return message.channel.send('Pick the number of wrong guesses you want to allow, again...');
             }
-            return message.channel.send('Hangman would BEGIN from here');
+            wrongs = output[2];
+            message.channel.send('Start Guessing...');
+            return message.channel.send(pattern);
         }
+        const result = await Hangman.parseInput(message.content, pattern, wrongs);
+        pattern = result[1];
+        wrongs = result[2];
+        if(result[3]) message.channel.send(result[0]);
+        if(wrongs === 0) { 
+            userToken = channelToken = undefined;
+            lengthFlag = guessFlag = false;
+            return message.channel.send('You are out of turns. Quitting');
+        }
+        if(pattern === Settings['hangman-secret']) {
+            userToken = channelToken = undefined;
+            lengthFlag = guessFlag = false;
+            return message.channel.send('You Win. Quitting');
+        }
+        return message.channel.send(pattern);
     }
 });
 
