@@ -8,6 +8,7 @@
  */
 
 // custom imports from local files
+const Hangman  = require('./hangman');          // used to control hangman modules
 const Initialize = require('./initialize');     // used to populate all arrays in streams to conserve data
 const Punishment = require('./punishment');     // used to check for cursewords
 const Settings = require('./settings.json');    // used to get bot token from the app's API
@@ -90,6 +91,7 @@ const seasonInfo = {1: { color: '#fff777',
 const evilHangmanDictionary = Initialize.loadDictionary();
 let userToken = undefined;
 let channelToken = undefined;
+let lengthFlag = false;
 const readHangman = (author, channel) => author === userToken && channel === channelToken;
 
 client.once('ready', () => {
@@ -106,7 +108,14 @@ client.on('message', async message => {
         if(command === 'quit') {
             userToken = undefined;
             channelToken = undefined;
+            lengthFlag = false;
             return;
+        }
+    }
+    if(readHangman(authorToken, sourceToken)) {
+        if(lengthFlag) {
+            let msg = await Hangman.wordLength(message.content);
+            return message.channel.send(msg);
         }
     }
 });
@@ -265,20 +274,21 @@ client.on('message', async message => {
         /******************** Hangman Activation [ @version 1.4.1 ] ********************/
         if(command === 'hangman') {
             if(userToken !== undefined || channelToken !== undefined) {
-                return message.channel.send('One instance of game active');
+                return message.channel.send(`Are you really that dumb ${message.author.username}...` 
+                        + ` You can't possibly start another hangman game while one session is already active`
+                        + `. Uhh... I can't believe you're this stupid.`)
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
             }
+            message.channel.send(`So, you think you're good at playing hangman, huh?\n**False**.\n` 
+                    + `You can never beat me, never achieve *perfectenschlag*, but I will give you a`
+                    + ` chance to prove yourself. Lets see how good you are ${message.author.username}`);
             userToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
             channelToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
-            message.channel.send(`User Token: ${userToken}, Channel Token: ${channelToken}`);
+            lengthFlag = true;
+            console.log(`User Token: ${userToken}, Channel Token: ${channelToken}`);
+            message.channel.send('Pick a length for your word');
             return;
         }
-        // if(command === 'hangman') {
-        //     if(hangmanActive) {
-        //         return message.channel.send(`Are you really that dumb ${message.author.username}...` 
-        //                 + ` You can't possibly start another hangman game while you're already playing one`
-        //                 + `. Uhh... I can't believe you're this stupid.`)
-        //                 .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-        //     }
         //     hangmanActive = true;
         //     hangmanUser = message.author;
         //     hangmanChannel = message.channel;
@@ -295,13 +305,6 @@ client.on('message', async message => {
 });
 
 /******************** Hangman Manager [ @version 1.4.2 ] ********************/
-// const hangman = () => {
-//     hangmanChannel.send(`So, you think you're good at playing hangman, huh?` 
-//             + ` Let's see how good you are, ${hangmanUser}`)
-//             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//     hangmanChannel.send('Pick a word length for your hangman game')
-//             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//     // check for commands being used
 //     client.on('message', async message => {
 //         // only handle requests for the player and in the same channel
 //         if(message.author === hangmanUser && message.channel === hangmanChannel) {
