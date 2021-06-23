@@ -68,26 +68,26 @@ module.exports = {
         if(guesses > 25) return ['Only 25 wrong guesses allowed', flag, guesses];
         return ['Working', !flag, guesses];     // success case
     },
-    parseInput: async (input, pattern, wrongs, read=true) => {
+    parseInput: async (input, pattern, wrongs, words=[]) => {
         // input corrections
-        if(input.length > 1) return ['Only accepting 1 character', pattern, wrongs - 1, read];
+        if(input.length > 1) return ['Only accepting 1 character', pattern, wrongs - 1, activeWords];
         input = input.toLowerCase();
-        if(input < 0x61 || input > 0x7A) return ['Only alphabets allowed', pattern, wrongs - 1, read];
+        if(input < 0x61 || input > 0x7A) return ['Only alphabets allowed', pattern, wrongs - 1, activeWords];
         if(guessesMade.includes(input)) 
-            return [`${guessesMade}\n` + `Already guessed ${input}`, pattern, wrongs, read];
+            return [`${guessesMade}\n` + `Already guessed ${input}`, pattern, wrongs, activeWords];
         guessesMade.push(input);
         guessesMade.sort();
         let newPattern = selectPattern(input, pattern);
         if(newPattern === pattern)
-            return [`${guessesMade}\n` + 'Sorry, wrong guess', pattern, wrongs - 1, read];
+            return [`${guessesMade}\n` + 'Sorry, wrong guess', pattern, wrongs - 1, activeWords];
         pattern = newPattern;
         if(countUnknowns(pattern) === 0) {
             activeWords = [];
             guessesMade = [];
             patternMap.clear();
-            return ['Working', Settings['hangman-secret'], wrongs, read];
+            return ['You did it', Settings['hangman-secret'], wrongs, pattern];
         }
-        return [`${guessesMade}`, pattern, wrongs, read];
+        return [`${guessesMade}`, pattern, wrongs, activeWords];
     },
     clean: async () => {
         activeWords = [];

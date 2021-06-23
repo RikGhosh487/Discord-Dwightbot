@@ -141,18 +141,21 @@ client.on('message', async message => {
         const result = await Hangman.parseInput(message.content, pattern, wrongs);
         pattern = result[1];
         wrongs = result[2];
-        if(result[3]) message.channel.send(result[0]);
+        message.channel.send(result[0]);
         if(wrongs === 0) { 
             userToken = channelToken = undefined;
             lengthFlag = guessFlag = false;
             await Hangman.clean();
-            return message.channel.send('You are out of turns. Quitting');
+            let answer = result[3][Math.floor(Math.random() * result[0].length)];
+            message.channel.send(`The correct answer was **${answer}**`);
+            return message.channel.send('You are out of turns.');
         }
         if(pattern === Settings['hangman-secret']) {
             userToken = channelToken = undefined;
             lengthFlag = guessFlag = false;
             await Hangman.clean();
-            return message.channel.send('You Win. Quitting');
+            message.channel.send(`The answer was **${result[3]}**`);
+            return message.channel.send('You Win');
         }
         return message.channel.send(pattern);
     }
@@ -319,13 +322,13 @@ client.on('message', async message => {
             }
             message.channel.send(`So, you think you're good at playing hangman, huh?\n**False**.\n` 
                     + `You can never beat me, never achieve *perfectenschlag*, but I will give you a`
-                    + ` chance to prove yourself. Lets see how good you are ${message.author.username}`);
+                    + ` chance to prove yourself. Lets see how good you are ${message.author.username}`)
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2}));
             userToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
             channelToken = Tokens.tokenize(message.channel.id, Settings['hangman-secret']);
             lengthFlag = guessFlag = true;
-            console.log(`User Token: ${userToken}, Channel Token: ${channelToken}`);
-            message.channel.send('Pick a length for your word');
-            return;
+            return message.channel.send('Pick a length for your word')
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
         }
         // if(command === 'quit') {
         //     return message.channel.send(`On wow! You haven't even started and are calling quits...` 
