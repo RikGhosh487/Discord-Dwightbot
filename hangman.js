@@ -22,8 +22,8 @@ function selectPattern(input, pattern) {
     patternMap.clear();
     let temp = [];
     activeWords.forEach(elem => {
-        pattern = patternMaker(pattern, elem, input);
-        temp.push([pattern, elem]);
+        let newpattern = patternMaker(pattern, elem, input);
+        temp.push([newpattern, elem]);
     });
     temp.forEach(elem => {
         let pat = elem[0];
@@ -78,7 +78,8 @@ module.exports = {
         guessesMade.push(input);
         guessesMade.sort();
         let newPattern = selectPattern(input, pattern);
-        if(newPattern === pattern) return [`${guessesMade}` + 'Sorry, wrong guess', pattern, wrongs - 1, read];
+        if(newPattern === pattern)
+            return [`${guessesMade}\n` + 'Sorry, wrong guess', pattern, wrongs - 1, read];
         pattern = newPattern;
         if(countUnknowns(pattern) === 0) {
             activeWords = [];
