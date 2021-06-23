@@ -3,7 +3,7 @@
  * 
  * @author Rik Ghosh
  * @author Soham Saha
- * @version 1.5.1
+ * @version 1.5.3
  * @copyright 2021 
  */
 
@@ -101,6 +101,7 @@ client.once('ready', () => {
     client.user.setPresence({ status: 'invisible' });   // sets bot invisible to users
 });
 
+/******************** Hangman Manager [ @version 1.5.3 ] ********************/
 client.on('message', async message => {
     if(message.author.bot) return;  // ignore messages from another bot
     let authorToken = Tokens.tokenize(message.author.id, Settings['hangman-secret']);
@@ -113,7 +114,9 @@ client.on('message', async message => {
             lengthFlag = false;
             guessFlag = false;
             await Hangman.clean();
-            return;
+            return message.channel.send(`Oh wow! So you have decided to call it quits...\n` 
+                        + `You're a disgrace to Dunder Mifflin ${message.author}. Get out of here.`)
+                        .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
         }
     }
     if(readHangman(authorToken, sourceToken)) {
@@ -330,86 +333,17 @@ client.on('message', async message => {
             return message.channel.send('Pick a length for your word')
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
         }
-        // if(command === 'quit') {
-        //     return message.channel.send(`On wow! You haven't even started and are calling quits...` 
-        //             + ` You're a disgrace to Dunder Mifflin ${message.author}`)
-        //             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-        // }
+        if(command === 'quit') {
+            message.channel.send(`What's the problem ${message.author}.\nYou want to quit your job?`
+                    + `How about quitting your life, because you can't be attempting to quit Hangman before `
+                    + `even starting the game, as that would make you stupid.`)
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+            return message.channel.send('Oh wait! You really ARE that stupid...')
+                    .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
+        }
     }
 });
 
-/******************** Hangman Manager [ @version 1.4.2 ] ********************/
-//     client.on('message', async message => {
-//         // only handle requests for the player and in the same channel
-//         if(message.author === hangmanUser && message.channel === hangmanChannel) {
-//             // active commands for the player
-//             if(message.content.startsWith(prefix)) {
-//                 const command = message.content.slice(prefix.length).toLowerCase();
-//                 if(command === 'hangman' && lobby.length > 0) {
-//                     return hangmanChannel.send(`Are you really that dumb ${message.author.username}...` 
-//                             + ` You can't possibly start another hangman game while you're` 
-//                             + ` already playing one. Uhh... I can't believe you're this stupid.`)
-//                             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//                 } else if(command === 'quit') {
-//                     // reset commands that deletes previous code and sets up the environment for the next player
-//                     hangmanChannel.send('Yeah, that\'s right... back away loser.')
-//                             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//                     hangmanActive = false;
-//                     lobby.pop();
-//                     hangmanUser = undefined;
-//                     hangmanChannel = undefined;
-//                     return wordLengthCollected = false;
-//                 } else {
-//                     hangmanChannel.send('If you want to use the other commands, you need to chicken' 
-//                             + ' out of this hangman game')
-//                             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//                     return hangmanChannel.send('Might as well go ahead and call the `?quit` command, you IDIOT')
-//                             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//                 }
-//             } else {
-//                 // prompted requests
-//                 if(!wordLengthCollected) {
-//                     while(wordLength === undefined) {
-//                         let userInput = parseInt(message.content.toLowerCase());
-//                         wordLength = !Number.isNaN(userInput) && wordsExist(userInput) ? userInput : undefined;
-//                         if(wordLength === undefined) {
-//                             return hangmanChannel.send('Pick a word length for your hangman game')
-//                                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//                         }
-//                     }
-//                     populateActiveWords(wordLength);
-//                     console.log(activeWords);
-//                     wordLengthCollected = true; // turn off flag warning
-//                 } else {
-//                     console.log('doing nothing');
-//                 }
-//             }
-//         }
-        
-//     });
-// }
-
-// hangman helper functions
-// const wordsExist = len => {
-//     for(let i = 0; i < evilHangmanDictionary.length; i++) {
-//         const word = evilHangmanDictionary[i];
-//         if(word.length === len) {
-//             return true;
-//         }
-//     }
-//     hangmanChannel.send('The size is too long...')
-//             .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
-//     hangmanChannel.send('That\'s what she said!');
-//     return false;
-// };
-
-// const populateActiveWords = wordLen => {
-//     evilHangmanDictionary.forEach(element => {
-//         if(element.length === wordLen) {
-//             activeWords.push(element);
-//         }
-//     });
-// }
 
 // always monitoring bot functions
 client.on('message', async message => {
