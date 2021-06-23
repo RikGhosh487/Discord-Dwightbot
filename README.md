@@ -2,12 +2,9 @@
 ## General Description
 Simple Discord bot themed with Dwight K. Shrute with multi-facated functionality
 
-### Current Bugs (as of v 1.5.0)
-- ~~duplication of replies from the bot with `?hangman` command and all subsequent messages from the bot~~ (**PATCHED**)
-- ~~looping pattern with same reply posted with multi-threading~~ (**PATCHED**)
-
-## Version 1.5.1 - Hangman User Control Patch
-Introduced sessions environment for Hangman Users. Patched aforementioned bugs and removed preceding functionality for accepting user input. Added Java and Shell scripting modules for communication from source control. 
+## Version 1.5.3 - Hangman Interface
+Introduced fully working functionality to the 7th job for discord bot. Missing "**DWIGHT SASS**" for full completion.
+Typing `?hangman` on your desired `#discord-text-channel` will set up the hangman interface and ask the user for prompts to set up the game environment. When in the interface, no **prefix** is required and the prompt answers can be entered simply. Controls have been put to re-request the user in initial input was invalid. The user does have the choice to quit the interface at anytime using the `?quit` command. While then hangman interface is running, other users won't be able to create a separate instance of the game. The user playing the hangman game in the specific text channel cannot use other commands in that channel while in the interface, but can use the other commands in a **separate channel** if they do wish to. The game protocol is like any **normal hangman game** where the user enters a **single character** to attempt to guess the correct word. If the user runs out of wrong guesses, the game interface will clean up and quit for the user. If the user wins the game, the game interface will clean up and quit once again. In both cases the answer would be announced. If the player force quits using the `?quit` command, then the answer won't be revealed.
 
 ## Version 1.5.0 - Episode Highlights Update
 Introduced the 6th functionality for discord bot.
