@@ -112,6 +112,7 @@ client.on('message', async message => {
             channelToken = undefined;
             lengthFlag = false;
             guessFlag = false;
+            await Hangman.clean();
             return;
         }
     }
@@ -144,11 +145,13 @@ client.on('message', async message => {
         if(wrongs === 0) { 
             userToken = channelToken = undefined;
             lengthFlag = guessFlag = false;
+            await Hangman.clean();
             return message.channel.send('You are out of turns. Quitting');
         }
         if(pattern === Settings['hangman-secret']) {
             userToken = channelToken = undefined;
             lengthFlag = guessFlag = false;
+            await Hangman.clean();
             return message.channel.send('You Win. Quitting');
         }
         return message.channel.send(pattern);

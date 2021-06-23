@@ -3,9 +3,47 @@ const Settings = require('./settings.json');
 
 const dictionary = Initialize.loadDictionary();
 let activeWords = [];
-const guessesMade = [];
+let guessesMade = [];
+let patternMap = new Map();
 const filterWords = size => activeWords = dictionary.filter(elem => elem.length === size);
-const basePattern = size => '- '.repeat(size);
+const basePattern = size => '-'.repeat(size);
+const countUnknowns = pattern => {
+    let count = 0;
+    for(let i = 0; i < pattern.length; i++) count += pattern.charAt(i) === '-' ? 1 : 0;
+    return count;
+}
+const patternMaker = (base, word, guess) => {
+    for(let i = 0; i < word.length; i++)
+        if(word.substring(i, i + 1) === guess)
+            base = base.substring(0, i) + guess + base.substring(i + 1);
+    return base;
+}
+function selectPattern(input, pattern) {
+    patternMap.clear();
+    let temp = [];
+    activeWords.forEach(elem => {
+        pattern = patternMaker(pattern, elem, input);
+        temp.push([pattern, elem]);
+    });
+    temp.forEach(elem => {
+        let pat = elem[0];
+        if(!patternMap.has(pat)) {
+            patternMap.set(pat, []);
+        }
+        patternMap.get(pat).push(elem[1]);
+    });
+    let keys = [];
+    patternMap.forEach((v, k) => keys.push([k, v.length]));
+    keys.sort((a, b) => {
+        let aUnknowns = countUnknowns(a[0]);
+        let bUnknowns = countUnknowns(b[0]);
+        if((aUnknowns === bUnknowns) && (a[1] === b[1])) return a[0].localeCompare(b[0]);
+        if((a[1] === b[1])) return bUnknowns - aUnknowns;
+        return b[1] - a[1];
+    });
+    activeWords = patternMap.get(keys[0][0]);
+    return keys[0][0];
+}
 
 module.exports = {
     wordLength: async (input, flag=true) => {
@@ -19,7 +57,7 @@ module.exports = {
         dictionary.forEach(elem => count += elem.length == wordlength ? 1 : 0); // count words with given size
         if(count === 0) return [`That is just too big of a size.\n\nThat's what she said.`, flag, wordlength];
         filterWords(wordlength);
-        return [`Working`, !flag, wordlength, `**${basePattern(wordlength)}**`];// success case
+        return [`Working`, !flag, wordlength, `${basePattern(wordlength)}`];// success case
     },
     guessCount: async (input, flag=true) => {
         let guesses = parseFloat(input);
@@ -30,13 +68,29 @@ module.exports = {
         if(guesses > 25) return ['Only 25 wrong guesses allowed', flag, guesses];
         return ['Working', !flag, guesses];     // success case
     },
-    parseInput: async (input, pattern, wrongs, read=false) => {
+    parseInput: async (input, pattern, wrongs, read=true) => {
         // input corrections
-        if(input.length > 1) return ['Only accepting 1 character', pattern, wrongs - 1, !read];
+        if(input.length > 1) return ['Only accepting 1 character', pattern, wrongs - 1, read];
         input = input.toLowerCase();
-        if(input < 0x61 || input > 0x7A) return ['Only alphabets allowed', pattern, wrongs - 1, !read];
-        
-        // if(pattern.indexOf('-') === -1) return ['Working', Settings['hangman-secret'], wrongs, read];
-        return ['Working', pattern, wrongs, read];
+        if(input < 0x61 || input > 0x7A) return ['Only alphabets allowed', pattern, wrongs - 1, read];
+        if(guessesMade.includes(input)) 
+            return [`${guessesMade}\n` + `Already guessed ${input}`, pattern, wrongs, read];
+        guessesMade.push(input);
+        guessesMade.sort();
+        let newPattern = selectPattern(input, pattern);
+        if(newPattern === pattern) return [`${guessesMade}` + 'Sorry, wrong guess', pattern, wrongs - 1, read];
+        pattern = newPattern;
+        if(countUnknowns(pattern) === 0) {
+            activeWords = [];
+            guessesMade = [];
+            patternMap.clear();
+            return ['Working', Settings['hangman-secret'], wrongs, read];
+        }
+        return [`${guessesMade}`, pattern, wrongs, read];
+    },
+    clean: async () => {
+        activeWords = [];
+        guessesMade = [];
+        patternMap.clear();
     }
 }
