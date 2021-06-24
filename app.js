@@ -3,7 +3,7 @@
  * 
  * @author Rik Ghosh
  * @author Soham Saha
- * @version 1.5.3
+ * @version 1.5.5
  * @copyright 2021 
  */
 
@@ -94,6 +94,7 @@ let pattern = undefined;
 let wrongs = undefined;
 let lengthFlag = false;
 let guessFlag = false;
+let quitOnce = false;
 const readHangman = (author, channel) => author === userToken && channel === channelToken;
 
 client.once('ready', () => {
@@ -113,6 +114,7 @@ client.on('message', async message => {
             channelToken = undefined;
             lengthFlag = false;
             guessFlag = false;
+            quitOnce = true;
             await Hangman.clean();
             return message.channel.send(`Oh wow! So you have decided to call it quits...\n` 
                         + `You're a disgrace to Dunder Mifflin ${message.author}. Get out of here.`)
@@ -333,7 +335,8 @@ client.on('message', async message => {
             return message.channel.send('Pick a length for your word')
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
         }
-        if(command === 'quit') {
+        if(command === 'quit' && !quitOnce) {
+            quitOnce = false;
             message.channel.send(`What's the problem ${message.author}.\nYou want to quit your job? `
                     + `How about quitting your life, because you can't be attempting to quit Hangman before `
                     + `even starting the game, as that would make you stupid.`)

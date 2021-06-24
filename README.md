@@ -2,21 +2,25 @@
 ## General Description
 Simple Discord bot themed with Dwight K. Shrute with multi-facated functionality
 
-## Version 1.5.3 - Hangman Interface
-Introduced fully working functionality to the 7th job for discord bot. Missing "**DWIGHT SASS**" for full completion.
-Typing `?hangman` on your desired `#discord-text-channel` will set up the hangman interface and ask the user for prompts to set up the game environment. When in the interface, no **prefix** is required and the prompt answers can be entered simply. Controls have been put to re-request the user in initial input was invalid. The user does have the choice to quit the interface at anytime using the `?quit` command. While then hangman interface is running, other users won't be able to create a separate instance of the game. The user playing the hangman game in the specific text channel cannot use other commands in that channel while in the interface, but can use the other commands in a **separate channel** if they do wish to. The game protocol is like any **normal hangman game** where the user enters a **single character** to attempt to guess the correct word. If the user runs out of wrong guesses, the game interface will clean up and quit for the user. If the user wins the game, the game interface will clean up and quit once again. In both cases the answer would be announced. If the player force quits using the `?quit` command, then the answer won't be revealed.
+>Functions
+- Dwight Quotes
+- Profanity Filter
+- Music from [The Office](https://www.peacocktv.com/stream-tv/the-office)
+- Speeches from [The Office](https://www.peacocktv.com/stream-tv/the-office)
+- Episode Highlights
+- Hangman Game
+
+## Version 1.5.5 - The Hangman Game
+Introduced the sixth functionality for discord bot.
+Typing `?hangman` on your desired `#discord-text-channel` will set up the hangman interface and ask the user for prompts to set up the game environment. When in the interface, no **prefix** is required and the prompt answers can be entered simply. Controls have been put to re-request the user if initial input was invalid. The user does have the choice to quit the interface at anytime using the `?quit` command. While then hangman interface is running, other users won't be able to create a separate instance of the game. The user playing the hangman game in the specific text channel cannot use other commands in that channel while in the interface, but can use the other commands in a **separate channel** if they do wish to. The game protocol is like any **normal hangman game** where the user enters a **single character** to attempt to guess the correct word. If the user runs out of wrong guesses, the game interface will clean up and quit for the user. If the user wins the game, the game interface will clean up and quit once again. In both cases the answer would be announced. If the player force quits using the `?quit` command, then the answer won't be revealed.
 
 ## Version 1.5.0 - Episode Highlights Update
-Introduced the 6th functionality for discord bot.
+Introduced the fifth functionality for discord bot.
 Typing `?episode` or `?watch episode` will make the bot print an **embedded message** linking to a random episode of NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). The embed contain the **season**, the **episode**, the number of **views** it received on the day of the release a **hyperlink** to watch the episode, **DVD cover thumbnail** of the season, and an **id** that will be used for indexed searching of an episode. Using the command `?episode(#)` will fetch the episode with the id of `@#` in the episode list, rather than random index generation. The `?dwight's monthly pick` or `?dmp` command will present Dwight's top 10 list for that month. This command interprets the date and time of the command in real time, and using that information, presents a **themed version** of the top 10 list for each month. If the switch-case fails due to an error, or in a **15%** chance, the default list for that day is presented with a special description. This is also presented as a embed message with a tabular format. The top 10 list provides the season and episode number and the title.
 
 ## Version 1.4.2 - Speech Update
-Introduced the 5th functionality for discord bot.
+Introduced the fourth functionality for discord bot.
 Typing `?speech` or `?dwight speech` will make the bot print out one of the speeches delivered by Dwight K. Schrute in NBC's [The Office](https://www.peacocktv.com/stream-tv/the-office). The bot will pick a random speech from the `speech.txt` file and print out the text to the channel as an **embedded message**.
-
-## Version 1.4.1 - Hangman Shell Update
-Introduced the basic shell of the 4th functionality for discord bot.
-Typing `?hangman` will launch a new playable environment where the user would be able to play hangman in the future. There are plent of bugs and issues with this shell and the code (originally written in **Java** and then reimplemented using **Javascript**) is not fully portable for Discord requirements. Currently includes `?quit` command as well, allowing the user to leave the playable environment. This will feature only single player environments so multiple threads of the hangman interface cannot be generated. The bot will prevent another user from joining if someone is already playing Hangman
 
 ## Version 1.3.1 - Music Update
 Introduced third functionality for discord bot.
