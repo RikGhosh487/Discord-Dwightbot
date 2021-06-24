@@ -151,7 +151,7 @@ client.on('message', async message => {
             userToken = channelToken = undefined;
             lengthFlag = guessFlag = false;
             await Hangman.clean();
-            let answer = result[3][Math.floor(Math.random() * result[0].length)];
+            let answer = result[3][Math.floor(Math.random() * result[3].length)];
             message.channel.send(`The correct answer was **${answer}**`);
             return message.channel.send('You are out of turns.');
         }
