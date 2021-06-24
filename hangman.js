@@ -48,8 +48,10 @@ function selectPattern(input, pattern) {
 module.exports = {
     wordLength: async (input, flag=true) => {
         let wordlength = parseFloat(input);
-        if(Number.isNaN(wordlength)) return ['Not a valid number.', flag, wordlength];
-        if(!Number.isInteger(wordlength)) return ['Cannot have floats', flag, wordlength];
+        if(Number.isNaN(wordlength)) return ['That\'s not even a number, idiot.', flag, wordlength];
+        if(!Number.isInteger(wordlength)) return ['Look at smartie-pants.' 
+                + ' Someone knows how to use decimals... But I guess you don\'t know where to use them do you?'
+                + ' Hint: It\'s not here, Idiot! ', flag, wordlength];
         wordlength = parseInt(input);
         if(wordlength < 2) return [`Are you stupid. Go back to Elementary School, you idiot,` 
                 + ` choosing a word of size **${wordlength}**`, flag, wordlength];    
@@ -57,37 +59,45 @@ module.exports = {
         dictionary.forEach(elem => count += elem.length == wordlength ? 1 : 0); // count words with given size
         if(count === 0) return [`That is just too big of a size.\n\nThat's what she said.`, flag, wordlength];
         filterWords(wordlength);
-        return [`Working`, !flag, wordlength, `${basePattern(wordlength)}`];// success case
+        return [`Success`, !flag, wordlength, `${basePattern(wordlength)}`];// success case
     },
     guessCount: async (input, flag=true) => {
         let guesses = parseFloat(input);
-        if(Number.isNaN(guesses)) return ['Not a valid number.', flag, guesses];
-        if(!Number.isInteger(guesses)) return ['Cannot have floats', flag, guesses];
+        if(Number.isNaN(guesses)) return ['That\'s not even a number, idiot.', flag, guesses];
+        if(!Number.isInteger(guesses)) return ['Are you really trying to use decimals again?', flag, guesses];
         guesses = parseInt(input);
-        if(guesses < 1) return ['Can\'t have less than 1 wrong guess', flag, guesses];
-        if(guesses > 25) return ['Only 25 wrong guesses allowed', flag, guesses];
-        return ['Working', !flag, guesses];     // success case
+        if(guesses < 1) return ['You may be bold, and I didn\'t become a Lackawanna County Sherrif' 
+                + ' to make friends... But I do believe in giving my worst foes at least 1 chance.' 
+                + ' So pick a number greater than 0', flag, guesses];
+        if(guesses > 25) return ['Don\'t get so needy... Only 25 wrongs are allowed. ' 
+                + 'Hoping you have the brains to figure out why', flag, guesses];
+        return ['Success', !flag, guesses];     // success case
     },
-    parseInput: async (input, pattern, wrongs, words=[]) => {
+    parseInput: async (input, pattern, wrongs) => {
         // input corrections
-        if(input.length > 1) return ['Only accepting 1 character', pattern, wrongs - 1, activeWords];
+        if(input.length > 1) return ['Learn how to play Hangman, Idiot... ' 
+                + ' 1 character at a time', pattern, wrongs - 1, activeWords];
         input = input.toLowerCase();
-        if(input < 0x61 || input > 0x7A) return ['Only alphabets allowed', pattern, wrongs - 1, activeWords];
+        if(input < 0x61 || input > 0x7A)
+            return ['Are you serious... numbers? In Hangman?', pattern, wrongs - 1, activeWords];
         if(guessesMade.includes(input)) 
-            return [`${guessesMade}\n` + `Already guessed ${input}`, pattern, wrongs, activeWords];
+            return [`You have already guessed these letters: ${guessesMade}\n` 
+                    + `Learn to read so that you don't put ${input} again`, pattern, wrongs, activeWords];
         guessesMade.push(input);
         guessesMade.sort();
         let newPattern = selectPattern(input, pattern);
         if(newPattern === pattern)
-            return [`${guessesMade}\n` + 'Sorry, wrong guess', pattern, wrongs - 1, activeWords];
+            return [`You have already guessed these letters: ${guessesMade}\n` 
+                    + 'Try again, or walk away...', pattern, wrongs - 1, activeWords];
         pattern = newPattern;
         if(countUnknowns(pattern) === 0) {
             activeWords = [];
             guessesMade = [];
             patternMap.clear();
-            return ['You did it', Settings['hangman-secret'], wrongs, pattern];
+            return ['I can\'t believe it... You actually beat me... You\'ve got to be kidding me',
+                    Settings['hangman-secret'], wrongs, pattern];
         }
-        return [`${guessesMade}`, pattern, wrongs, activeWords];
+        return [`You have already guessed these letters: ${guessesMade}`, pattern, wrongs, activeWords];
     },
     clean: async () => {
         activeWords = [];

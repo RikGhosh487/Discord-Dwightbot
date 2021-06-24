@@ -334,7 +334,7 @@ client.on('message', async message => {
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase * 2 }));
         }
         if(command === 'quit') {
-            message.channel.send(`What's the problem ${message.author}.\nYou want to quit your job?`
+            message.channel.send(`What's the problem ${message.author}.\nYou want to quit your job? `
                     + `How about quitting your life, because you can't be attempting to quit Hangman before `
                     + `even starting the game, as that would make you stupid.`)
                     .then(sentMessage => sentMessage.delete({ timeout: timeoutBase }));
